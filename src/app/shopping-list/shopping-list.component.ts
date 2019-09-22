@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Ingridient } from '../shared/ingridient.model';
-import { ShoppingListService } from './shopping-list.service';
 import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as fromShoppingList from './store/shopping-list.reducer';
@@ -15,7 +14,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   ingridients: Observable<{ingridients: Ingridient[]}>;
   private subscription: Subscription;
 
-  constructor(private slService: ShoppingListService, public store: Store<fromShoppingList.AppState>) { }
+  constructor(public store: Store<fromShoppingList.AppState>) { }
 
   ngOnInit() {
     this.ingridients = this.store.select('shoppingList')

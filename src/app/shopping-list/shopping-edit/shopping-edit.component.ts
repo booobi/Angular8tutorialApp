@@ -1,6 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { Ingridient } from 'src/app/shared/ingridient.model';
-import { ShoppingListService } from '../shopping-list.service';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -19,7 +18,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   @ViewChild('f', {static:false}) form:NgForm; 
 
-  constructor(private slService: ShoppingListService, private store: Store<fromShoppingList.AppState>) { }
+  constructor(private store: Store<fromShoppingList.AppState>) { }
  
   ngOnInit() {
     this.subscription = this.store.select('shoppingList').subscribe(stateData => {
