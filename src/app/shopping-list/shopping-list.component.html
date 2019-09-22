@@ -6,7 +6,7 @@
             <a
             class="list-group-item" 
             style="cursor: pointer"
-            *ngFor="let ingridient of ingridients; let i = index"
+            *ngFor="let ingridient of (ingridients | async).ingridients; let i = index"
             (click)="onEditItem(i)">{{ingridient.name}} ({{ingridient.amount}})</a>
         </ul>
     </div>
