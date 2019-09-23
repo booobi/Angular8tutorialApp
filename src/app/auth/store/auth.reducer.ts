@@ -4,13 +4,15 @@ import * as AuthActions from './auth.actions';
 export interface State {
     user: User;
     authError: string,
-    loading: boolean
+    loading: boolean,
+    redirect: boolean
 }
 
 const initialState: State = {
     user: null,
     authError: null,
-    loading: false
+    loading: false,
+    redirect: false
 }
 export function authReducer(state = initialState, action: AuthActions.AuthActions) {
     switch(action.type) {

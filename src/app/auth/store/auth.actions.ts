@@ -13,7 +13,7 @@ export const AUTOLOGIN = 'AUTOLOGIN';
 export class authenticateSuccess implements Action{
     readonly type = AUTHENTICATE_SUCCESS;
 
-    constructor(public payload: {email:string, userId: string, token: string, expirationDate: Date}) {}
+    constructor(public payload: {email:string, userId: string, token: string, expirationDate: Date, redirect: boolean}) {}
 }
 
 export class logout implements Action {

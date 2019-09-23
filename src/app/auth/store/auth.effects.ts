@@ -1,13 +1,13 @@
 import { Actions, ofType, Effect } from '@ngrx/effects';
-import * as AuthActions from './store/auth.actions';
+import * as AuthActions from './auth.actions';
 import { switchMap, catchError, map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from './user.model';
-import { AuthService } from './auth.service';
+import { User } from '../user.model';
+import { AuthService } from '../auth.service';
 
 export interface AuthResponseData {
     idToken: string,
@@ -27,7 +27,9 @@ const handleAuthentication = (expiresIn: number, email: string, userId: string, 
                     email: email,
                     userId: userId, 
                     token: token, 
-                    expirationDate: expirationDate})
+                    expirationDate: expirationDate,
+                    redirect: true
+                })
 };
 const handleError = (errorResponse: any) => {
     let errorMsg = "An uncommon error has occured!";
@@ -100,8 +102,10 @@ export class AuthEffects {
     @Effect({dispatch: false})
     authRedirect = this.actions$.pipe(
         ofType(AuthActions.AUTHENTICATE_SUCCESS),
-        tap(()=> {
-            this.router.navigate(['/']);
+        tap((authSuccessAction: AuthActions.authenticateSuccess)=> { 
+            if(authSuccessAction.payload.redirect) {
+                this.router.navigate(['/']);
+            }
         }))
 
     @Effect({dispatch: false})
@@ -138,7 +142,8 @@ export class AuthEffects {
                     email: loadedUser.email, 
                     userId: loadedUser.id, 
                     token: loadedUser.token,
-                    expirationDate: new Date(userData._tokenExpirationDate)
+                    expirationDate: new Date(userData._tokenExpirationDate),
+                    redirect: false
                     });
             }
 
